@@ -6,11 +6,5 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "./posts.js",
-      "dest": "/posts",
-      "methods": ["GET", "POST"]
-    }
-  ]
+  "routes": [{ "src": "/posts", "methods": ["GET"], "dest": "/posts.js" }]
 }
