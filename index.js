@@ -15,10 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 app.use(cors());
 
+app.use("/posts", posts);
 app.use("/", (req, res) => {
   res.json({ message: "Hello" });
 });
-app.use("/posts", posts);
 
 mongoose
   .connect(URI_DB, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -32,4 +32,4 @@ mongoose
     console.log(error);
   });
 
-module.exports = app;
+export default app;
