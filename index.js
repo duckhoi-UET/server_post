@@ -15,6 +15,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 app.use(cors());
 
+app.use("/", (req, res) => {
+  res.json({ message: "Hello" });
+});
 app.use("/posts", posts);
 
 mongoose
