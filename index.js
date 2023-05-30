@@ -16,13 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 app.use(cors());
 
 app.use("/posts", posts);
-app.use("/", async (req, res) => {
-  try {
-    const posts = await PostsModel.find();
-    res.status(200).json(posts);
-  } catch (error) {
-    res.status(500).json({ message: error });
-  }
+app.use("/", (req, res) => {
+  res.json({ message: "Welcome to Khoi's blog page" });
 });
 
 mongoose
