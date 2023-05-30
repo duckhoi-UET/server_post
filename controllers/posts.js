@@ -18,7 +18,7 @@ export const getPosts = async (req, res) => {
       posts: [...posts],
       pagination: {
         page_size: PAGINATION.PAGE_SIZE,
-        page: parseInt(req.query?.page),
+        page: parseInt(req.query?.page) || 1,
         total: posts.length,
       },
     };
