@@ -20,6 +20,7 @@ export const getPosts = async (req, res) => {
         page_size: PAGINATION.PAGE_SIZE,
         page: parseInt(req.query?.page) || 1,
         total: posts.length,
+        total_page: Math.ceil(posts.length / PAGINATION.PAGE_SIZE),
       },
     };
     res.status(200).json(response);
