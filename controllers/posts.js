@@ -1,9 +1,27 @@
 import { PostsModel } from "../models/PostsModel.js";
+import { PAGINATION } from "../constans/pagination.js";
 
 export const getPosts = async (req, res) => {
   try {
-    const posts = await PostsModel.find();
-    res.status(200).json(posts);
+    let posts = [];
+    const page = parseInt(req.query?.page);
+    if (page) {
+      const skipPost = (page - 1) * PAGINATION.PAGE_SIZE;
+      posts = await PostsModel.find({})
+        .skip(skipPost)
+        .limit(PAGINATION.PAGE_SIZE);
+    } else {
+      posts = await PostsModel.find();
+    }
+    const response = {
+      posts: [...posts],
+      pagination: {
+        page_size: PAGINATION.PAGE_SIZE,
+        page: parseInt(req.query?.page),
+        total: posts.length,
+      },
+    };
+    res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error });
   }
