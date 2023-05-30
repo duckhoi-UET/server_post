@@ -6,6 +6,7 @@ export const getPosts = async (req, res) => {
     let posts = [];
     const page = parseInt(req.query?.page);
     if (page) {
+      if (page < 1) page = 1;
       const skipPost = (page - 1) * PAGINATION.PAGE_SIZE;
       posts = await PostsModel.find({})
         .skip(skipPost)
