@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
 import posts from "./routers/posts.js";
+import rooms from "./routers/rooms.js";
 import auth from "./routers/auth.js";
 
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use("/", auth);
 app.use("/posts", posts);
+app.use("/rooms", rooms);
 app.use("/", (req, res) => {
   res.json({ message: "Welcome to Khoi's blog page" });
 });
