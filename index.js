@@ -10,7 +10,7 @@ import auth from "./routers/auth.js";
 const PORT = process.env.PORT || 5000;
 
 const URI_DB =
-  "mongodb+srv://khoinguyen2000bg:123456789aA%40@mern-app.j110qj0.mongodb.net/";
+  "mongodb+srv://khoinguyen2000bg:123456789aA%40@mern-app.j110qj0.mongodb.net/test";
 
 const app = express();
 app.use(bodyParser.json());
