@@ -24,9 +24,14 @@ export const getInfoUser = async (req, res) => {
   try {
     const id = req.data.response._id;
     const data = await AccountModel.findOne({ _id: id });
-    res
-      .status(200)
-      .json({ message: "Success", user: { username: data.username } });
+    res.status(200).json({
+      message: "Success",
+      user: {
+        username: data.username,
+        fullName: data.fullName,
+        avatar: data.avatar,
+      },
+    });
   } catch (error) {
     res.status(500).json({ error: error });
   }
