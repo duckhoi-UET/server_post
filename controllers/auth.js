@@ -11,10 +11,7 @@ export const login = async (req, res) => {
     if (response) {
       const token = jwt.sign({ response }, "token");
       res
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-        })
+        .cookie("token", token)
         .status(200)
         .json({ message: "Success", token: token });
     } else {
