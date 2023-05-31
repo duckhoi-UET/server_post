@@ -10,10 +10,8 @@ export const login = async (req, res) => {
     });
     if (response) {
       const token = jwt.sign({ response }, "token");
-      res
-        .cookie("token", token)
-        .status(200)
-        .json({ message: "Success", token: token });
+      res.cookie("token", token, { httpOnly: true });
+      res.status(200).json({ message: "Success", token: token });
     } else {
       res.status(500).json({ message: "Login Failed" });
     }
