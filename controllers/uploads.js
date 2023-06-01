@@ -1,20 +1,36 @@
-import axios from "axios";
-import FormData from "form-data";
+import * as Upload from "upload-js-full";
+import fetch from "node-fetch";
+
+const uploadManager = new Upload.UploadManager(
+  new Upload.Configuration({
+    fetchApi: fetch,
+    apiKey: "public_W142hwV26uUSoZG3pGai9paHC5e4",
+  })
+);
 
 export const uploadImage = async (req, res) => {
-  console.log(req.file);
-  const formData = new FormData();
-  formData.append("source", req.file.originalname);
-  const url = "https://freeimage.host/api/1/upload";
-  const apiKey = "6d207e02198a847aa98d0a2a901485a5";
-
   try {
-    const response = await axios.post(`${url}?key=${apiKey}`, {
-      source: formData,
+    const response = await uploadManager.upload({
+      accountId: "W142hwV",
+      data: req.file.buffer,
+      mime: "text/plain",
+      originalFileName: req.file.originalname,
+      maxConcurrentUploadParts: 4,
+      metadata: {
+        productId: 60891,
+      },
     });
-
-    console.log(response); // Process the API response data
+    if (response) {
+      res.json({
+        message: "Success",
+        fileUrl: response.fileUrl,
+        file: req.file,
+      });
+    }
   } catch (error) {
-    console.log(error);
+    res.json({
+      message: "Upload failed",
+      error: error,
+    });
   }
 };

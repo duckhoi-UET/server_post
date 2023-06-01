@@ -15,13 +15,14 @@
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "course": "^0.0.1",
     "express": "^4.18.2",
-    "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.1",
     "multer": "^1.4.5-lts.1",
+    "node-blob": "^0.0.2",
+    "node-fetch": "^3.3.1",
     "nodemon": "^2.0.22",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "upload-js-full": "^2.14.0"
   }
 }
