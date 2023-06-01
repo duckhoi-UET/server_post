@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     name: { type: String, require: true },
     price: { type: String, require: true },
     discount: { type: String, require: true, default: "0" },
-    attachment: String,
+    images: { type: Array, default: [] },
     persons: {
       type: Number,
       default: 0,
