@@ -4,22 +4,19 @@ import { PAGINATION } from "../constans/pagination.js";
 export const getAll = async (req, res) => {
   try {
     let rooms = [];
-    const page = parseInt(req.query?.page);
-    if (page) {
-      if (page < 1) page = 1;
-      const skipPost = (page - 1) * PAGINATION.PAGE_SIZE;
-      rooms = await RoomsModel.find({})
-        .skip(skipPost)
-        .limit(PAGINATION.PAGE_SIZE);
-    } else {
-      rooms = await RoomsModel.find();
-    }
+    let page = parseInt(req.query?.page || 0);
+    if (!page) page = 1;
+    const skipPost = (page - 1) * PAGINATION.PAGE_SIZE;
+    const total = await RoomsModel.count();
+    rooms = await RoomsModel.find({})
+      .skip(skipPost)
+      .limit(PAGINATION.PAGE_SIZE);
     const response = {
       rooms: [...rooms],
       pagination: {
         page_size: PAGINATION.PAGE_SIZE,
         page: parseInt(req.query?.page) || 1,
-        total: rooms.length,
+        total: total,
         total_page: Math.ceil(rooms.length / PAGINATION.PAGE_SIZE),
       },
     };
