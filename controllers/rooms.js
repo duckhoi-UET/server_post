@@ -29,6 +29,35 @@ export const getAll = async (req, res) => {
   }
 };
 
+export const getDetailRoom = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const room = await RoomsModel.findOne({ _id: id });
+    res.status(200).json({
+      status: "Success",
+      room: room,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
+export const updateRoom = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const room = await RoomsModel.findOneAndUpdate({ _id: id }, data, {
+      new: true,
+    });
+    res.status(200).json({
+      status: "Success",
+      room: room,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
 export const createRoom = async (req, res) => {
   try {
     const room = new RoomsModel(req.body);
@@ -36,5 +65,15 @@ export const createRoom = async (req, res) => {
     res.status(200).json(room);
   } catch (err) {
     res.status(500).json({ error: err });
+  }
+};
+
+export const deleteRoom = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const room = await RoomsModel.deleteOne({ _id: id });
+    res.status(200).json(room);
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
