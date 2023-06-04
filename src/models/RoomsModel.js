@@ -12,6 +12,7 @@ const schema = new mongoose.Schema(
     },
     status: { type: String },
     content: { type: String, default: "" },
+    number: { type: String, default: "" },
   },
   {
     timestamps: true,

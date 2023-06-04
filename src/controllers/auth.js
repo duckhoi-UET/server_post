@@ -9,7 +9,7 @@ export const login = async (req, res) => {
       password: account.password,
     });
     if (response) {
-      const token = jwt.sign({ response }, "token");
+      const token = jwt.sign({ response }, "token", { expiresIn: "5h" });
       res.cookie("token", token, { httpOnly: true });
       res.status(200).json({ message: "Success", token: token });
     } else {
