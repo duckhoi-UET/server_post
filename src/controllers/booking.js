@@ -1,5 +1,6 @@
 import { BookingModel } from "../models/BookingModel.js";
 import { PAGINATION } from "../constans/pagination.js";
+import mongoose from "mongoose";
 
 export const getAll = async (req, res) => {
   try {
@@ -76,12 +77,23 @@ export const create = async (req, res) => {
 export const getDetail = async (req, res) => {
   try {
     const id = req.params.id;
-    const booking = await BookingModel.findOne({ _id: id });
+    const booking = await BookingModel.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "rooms",
+          localField: "numberRoom",
+          foreignField: "number",
+          as: "room",
+        },
+      },
+    ]).exec();
     res.status(200).json({
       status: "Success",
       booking: booking,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };
