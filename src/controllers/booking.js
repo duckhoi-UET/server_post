@@ -90,7 +90,7 @@ export const getDetail = async (req, res) => {
     ]).exec();
     res.status(200).json({
       status: "Success",
-      booking: booking,
+      booking: booking[0],
     });
   } catch (err) {
     console.log(err);
