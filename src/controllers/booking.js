@@ -8,9 +8,40 @@ export const getAll = async (req, res) => {
     let page = parseInt(req.query?.page || 0);
     if (!page) page = 1;
     const skipPost = (page - 1) * PAGINATION.PAGE_SIZE;
-    const total = await BookingModel.count({ email: /khoi/ });
+    let condition = {};
+    if (req.query?.freeWord) {
+      const regex = new RegExp(req.query?.freeWord, "i");
+      let conditionOr = {
+        $or: [
+          { fullName: { $regex: regex } },
+          { email: { $regex: regex } },
+          { phone: { $regex: regex } },
+          { numberRoom: { $regex: regex } },
+        ],
+      };
+      condition = {
+        $and: [{ ...conditionOr }],
+      };
+    }
+
+    if (req.query?.status) {
+      let conditionOr = {
+        status: req.query?.status,
+      };
+      if (condition?.["$and"]?.length) {
+        condition["$and"].push(conditionOr);
+      } else {
+        condition = {
+          $and: [{ ...conditionOr }],
+        };
+      }
+    }
+
+    const total = await BookingModel.count(condition);
     booking = await BookingModel.aggregate([
-      { $match: { email: /khoi/ } },
+      {
+        $match: condition,
+      },
       {
         $lookup: {
           from: "rooms",
