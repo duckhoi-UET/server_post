@@ -8,8 +8,9 @@ export const getAll = async (req, res) => {
     let page = parseInt(req.query?.page || 0);
     if (!page) page = 1;
     const skipPost = (page - 1) * PAGINATION.PAGE_SIZE;
-    const total = await BookingModel.count();
+    const total = await BookingModel.count({ email: /khoi/ });
     booking = await BookingModel.aggregate([
+      { $match: { email: /khoi/ } },
       {
         $lookup: {
           from: "rooms",
