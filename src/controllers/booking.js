@@ -149,3 +149,29 @@ export const getDetail = async (req, res) => {
     res.status(500).json({ error: err });
   }
 };
+
+export const deleteBooking = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const booking = await BookingModel.deleteOne({ _id: id });
+    res.status(200).json(booking);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const updateBooking = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const booking = await BookingModel.findOneAndUpdate({ _id: id }, data, {
+      new: true,
+    });
+    res.status(200).json({
+      status: "Success",
+      booking: booking,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
