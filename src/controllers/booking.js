@@ -1,6 +1,7 @@
 import { BookingModel } from "../models/BookingModel.js";
 import { PAGINATION } from "../constans/pagination.js";
 import mongoose from "mongoose";
+import moment from "moment";
 
 export const getAll = async (req, res) => {
   try {
@@ -27,6 +28,25 @@ export const getAll = async (req, res) => {
     if (req.query?.status) {
       let conditionOr = {
         status: req.query?.status,
+      };
+      if (condition?.["$and"]?.length) {
+        condition["$and"].push(conditionOr);
+      } else {
+        condition = {
+          $and: [{ ...conditionOr }],
+        };
+      }
+    }
+
+    if (req.query?.from && req.query?.to) {
+      const startDate = moment(req.query?.from, "DD/MM/YYYY").toDate();
+      const endDate = moment(req.query?.to, "DD/MM/YYYY").toDate();
+
+      let conditionOr = {
+        createdAt: {
+          $gte: startDate,
+          $lt: endDate,
+        },
       };
       if (condition?.["$and"]?.length) {
         condition["$and"].push(conditionOr);
