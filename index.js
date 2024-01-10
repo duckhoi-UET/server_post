@@ -5,6 +5,9 @@ import cookieParser from "cookie-parser";
 import { connectDb } from "./src/config/db.js";
 import { route } from "./src/routers/index.js";
 import fileUpload from "express-fileupload";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
