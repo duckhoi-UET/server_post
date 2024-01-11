@@ -114,7 +114,7 @@ export const forgotPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   try {
-    const { token, newPassword, password } = req.body;
+    const { token, newPassword } = req.body;
 
     if (!token || !newPassword) {
       throw new Error("Token and newPassword are required");
@@ -123,10 +123,6 @@ export const resetPassword = async (req, res) => {
     const tokenDocument = await TokenModel.findOne({ token }).populate(
       "userId"
     );
-
-    if (!bcrypt.compareSync(password, tokenDocument.userId.password)) {
-      return res.status(500).json({ message: "Your old password is invalid" });
-    }
 
     if (!tokenDocument) {
       return res.status(500).json({ message: "Invalid or expired token" });
