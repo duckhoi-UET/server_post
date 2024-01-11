@@ -5,6 +5,7 @@ export const auth = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     const response = jwt.verify(token, "token");
     if (response) {
+      req.userData = response;
       next();
     }
   } catch (err) {

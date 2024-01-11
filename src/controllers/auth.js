@@ -73,6 +73,27 @@ export const register = async (req, res) => {
   }
 };
 
+export const changePassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+    const userId = req.userData.userId;
+    const user = await AccountModel.findById(userId);
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      return res
+        .status(400)
+        .json({ message: "Change password failed. Invalid current password." });
+    }
+    const hashedNewPassword = bcrypt.hashSync(newPassword, 8);
+    await AccountModel.findByIdAndUpdate(userId, {
+      password: hashedNewPassword,
+    });
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;

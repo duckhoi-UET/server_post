@@ -7,6 +7,7 @@ import {
   resetPassword,
   checkTokenExpire,
   logout,
+  changePassword,
 } from "../controllers/auth.js";
 import { checkToken } from "../middleware/checkToken.js";
 import { checkSignUp } from "../middleware/checkSignUp.js";
@@ -20,6 +21,7 @@ router.post("/register", checkSignUp, register);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.post("/check-token-expire", checkTokenExpire);
+router.post("/change-password", auth, changePassword);
 router.get("/me", checkToken, getInfoUser);
 
 export default router;
