@@ -32,7 +32,7 @@ export const getAll = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const product = new ProductsModel(req.body);
+    const product = new ProductsModel({ ...req.body, status: "1" });
     await product.save();
     res.status(200).json(product);
   } catch (err) {

@@ -7,6 +7,8 @@ const schema = new mongoose.Schema(
     brand: { type: String, require: true, default: "0" },
     images: { type: Array, default: [] },
     category: { type: String, default: "" },
+    stock: { type: String, default: "" },
+    status: { type: String, default: "" },
     content: { type: String, default: "" },
   },
   {
