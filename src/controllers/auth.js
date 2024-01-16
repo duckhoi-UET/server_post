@@ -115,7 +115,7 @@ export const forgotPassword = async (req, res) => {
 
     const URL = process.env.URL_FE || "http://localhost:3000";
 
-    const resetLink = `${URL}/verify-path?token=${token}`;
+    const resetLink = `${URL}/admin/verify-path?token=${token}`;
 
     const mailOptions = {
       from: "example.mail.node@gmail.com",
