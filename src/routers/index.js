@@ -6,6 +6,7 @@ import selections from "./selections.js";
 import booking from "./booking.js";
 import products from "./products.js";
 import category from "./category.js";
+import brand from "./brand.js";
 
 export const route = (app) => {
   app.use("/", auth);
@@ -14,6 +15,7 @@ export const route = (app) => {
   app.use("/rooms", rooms);
   app.use("/products", products);
   app.use("/category", category);
+  app.use("/brand", brand);
   app.use("/selections", selections);
   app.use("/booking", booking);
   app.use("/", (req, res) => {
